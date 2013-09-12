@@ -1,0 +1,13 @@
+Commands for Interfacing with Github
+
+Copying a github repo to local disk
+
+1. Point w.d. to the folder where you want the folder to be
+2.git clone (insert repository URL here with .git extension)
+
+
+Committing to Github
+1. Point w.d. to local github repo
+2. git add (filename with extension)
+3. git commit -m'(insert message here)'
+4. git push origin master 
