@@ -1,10 +1,17 @@
+#include <Servo.h>
+
 int incoming_message=0;
 int counter=0;
+int angle_track=0;
+
+Servo myservo;
 
 void setup() {                
   // initialize the digital pin as an output.
   pinMode(A5, INPUT);    
   Serial.begin(9600); 
+  myservo.attach(7);
+  //myservo.write(90);
 }
 
 // the loop routine runs over and over again forever:
@@ -18,7 +25,9 @@ void loop() {
     if (incoming_message=='1'){
       //Serial.print("I'm about to wait");
       delay(1000);
-      Serial.print ("I just moved the IR Sensor 1 unit to the right\r\n");
+      angle_track=angle_track+5;
+      myservo.write(angle_track);
+      //Serial.print ("I just moved the IR Sensor 1 unit to the right\r\n");
     }
     
     if (incoming_message=='2'){
@@ -38,13 +47,23 @@ void loop() {
 
     if (incoming_message=='5'){
       delay(500);
-      Serial.print ("I just moved the IR Sensor all the way to the left\r\n");
+      angle_track=0;
+      myservo.write(0);
+      //Serial.print ("I just moved the IR Sensor all the way to the left\r\n");
     }
 
     if (incoming_message=='6'){
       delay(500);
       int reading = analogRead(A5);
       Serial.println(reading);
+      //delay(1000); 
+    }
+    
+    if (incoming_message=='7'){
+      delay(500);
+      int reading = analogRead(A5);
+      float distance=25732.834527*(pow(reading, -1.1314581));
+      Serial.println(distance);
       //delay(1000); 
     }
 }
