@@ -1,0 +1,51 @@
+int incoming_message=0;
+int counter=0;
+
+void setup() {                
+  // initialize the digital pin as an output.
+  pinMode(A5, INPUT);    
+  Serial.begin(9600); 
+}
+
+// the loop routine runs over and over again forever:
+void loop() {
+  
+  //Sends data only when it is received
+  if (Serial.available()>0){
+    
+    incoming_message=Serial.read();
+    
+    if (incoming_message=='1'){
+      //Serial.print("I'm about to wait");
+      delay(1000);
+      Serial.print ("I just moved the IR Sensor 1 unit to the right\r\n");
+    }
+    
+    if (incoming_message=='2'){
+      delay(500);
+      Serial.print ("I just moved the IR Sensor 1 unit to the left\r\n");
+    }
+    
+    if (incoming_message=='3'){
+      delay(500);
+      Serial.print ("I just moved the IR Sensor 1 unit up\r\n");
+    }
+    
+    if (incoming_message=='4'){
+      delay(500);
+      Serial.print ("I just moved the IR Sensor 1 unit down\r\n");
+    }
+
+    if (incoming_message=='5'){
+      delay(500);
+      Serial.print ("I just moved the IR Sensor all the way to the left\r\n");
+    }
+
+    if (incoming_message=='6'){
+      delay(500);
+      int reading = analogRead(A5);
+      Serial.println(reading);
+      //delay(1000); 
+    }
+}
+}

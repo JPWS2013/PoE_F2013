@@ -6,7 +6,7 @@ data=[] #List object that stores the data from the arduino
 counter=0 #Counter that counts how many data points it has taken (May not be needed for final code)
 
 while True: #While able to get data?
-	while counter!=30: #Until it has 30 data points
+	while counter!=10: #Until it has 30 data points
 		reading= ser.readline() #Read the output from the arduino through the serial port
 
 		if counter != 0: #Ignores the very first reading from the arduino becuase that is usually a junk reading
