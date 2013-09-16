@@ -2,7 +2,8 @@
 
 int incoming_message=0;
 int counter=0;
-int angle_track=0;
+int horizontal_angle_track=0;
+int vertical_angle_track=0;
 
 Servo myservo;
 
@@ -24,9 +25,9 @@ void loop() {
     
     if (incoming_message=='1'){
       //Serial.print("I'm about to wait");
-      delay(1000);
-      angle_track=angle_track+5;
-      myservo.write(angle_track);
+      //delay(1000);
+      horizontal_angle_track=horizontal_angle_track+5;
+      myservo.write(horizontal_angle_track);
       //Serial.print ("I just moved the IR Sensor 1 unit to the right\r\n");
     }
     
@@ -46,8 +47,8 @@ void loop() {
     }
 
     if (incoming_message=='5'){
-      delay(500);
-      angle_track=0;
+      //delay(500);
+      horizontal_angle_track=0;
       myservo.write(0);
       //Serial.print ("I just moved the IR Sensor all the way to the left\r\n");
     }
@@ -62,8 +63,7 @@ void loop() {
     if (incoming_message=='7'){
       delay(500);
       int reading = analogRead(A5);
-      float distance=25732.834527*(pow(reading, -1.1314581));
-      Serial.println(distance);
+      Serial.println(reading);
       //delay(1000); 
     }
 }
