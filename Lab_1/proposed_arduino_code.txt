@@ -2,9 +2,9 @@
 
 int incoming_message=0;
 int counter=0;
-int horizontal_angle_track=170;
+int horizontal_angle_track=175;
 int vertical_angle_track=0;
-int horizontal_increment=5;
+int horizontal_increment=2;
 int vertical_increment=3;
 
 Servo horizontal_servo;
@@ -55,7 +55,7 @@ void loop() {
 
     if (incoming_message=='5'){ //Moves sensor all the way left
       //delay(500);
-      horizontal_angle_track=170;
+      horizontal_angle_track=140;
       horizontal_servo.write(horizontal_angle_track);
       //Serial.print ("I just moved the IR Sensor all the way to the left\r\n");
     }

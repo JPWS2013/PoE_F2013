@@ -6,8 +6,8 @@ class lidar:
 		r=radius
 		
 		self.z_pos = r*math.sin(vert_ang)
-		self.y_pos = r*math.cos(vert_ang)*math.cos(horz_ang)
-		self.x_pos = r*math.cos(vert_ang)*math.sin(horz_ang)
+		self.y_pos = r*math.cos(vert_ang)*math.sin(horz_ang)
+		self.x_pos = r*math.cos(vert_ang)*math.cos(horz_ang)
 
 	def display_data(self):
 

@@ -5,20 +5,17 @@ import serial
 import time
 from lidar_classdef import *
 
-ser=serial.Serial('/dev/ttyACM1', 9600) #Defines the serial port to use 
+ser=serial.Serial('/dev/ttyACM0', 9600) #Defines the serial port to use 
 
 data=[] #List object that stores the data from the arduino
 counter=0 #Counter that counts how many data points it has taken (May not be needed for final code)
 
-horz_angle=range(1,90,5)
-vert_angle=range(1,45,3)
-
-horizontal_angle_track=0
+horizontal_angle_track=175
 vertical_angle_track=0
 
 print "Waiting for arduino to be ready....."
 
-time.sleep(5)
+time.sleep(3)
 
 print "Programme beginning now"
 
@@ -27,10 +24,13 @@ time.sleep(1)
 #Moves the servo to the starting position
 
 ser.write('5')
+horizontal_angle_track=140
 time.sleep(0.5)
 ser.write('6')
+vertical_angle_track=0
 
-direction_track=1
+horz_angle=range(horizontal_angle_track, horizontal_angle_track-60, -2)
+vert_angle=range(vertical_angle_track,vertical_angle_track+9,3)
 
 for eachVerticalAngle in vert_angle:	
 	#print "I'm sending code to the arduino to reset it back all the way to the left"
@@ -57,7 +57,7 @@ for eachVerticalAngle in vert_angle:
 		data.append(processed_full_data_holder)
 
 		ser.write('1')
-		horizontal_angle_track=horizontal_angle_track+5
+		horizontal_angle_track=horizontal_angle_track-2
 		#print 'horizontal_angle_track= ', horizontal_angle_track
 		time.sleep(0.5)
 
@@ -67,16 +67,18 @@ for eachVerticalAngle in vert_angle:
 	time.sleep(0.5)
 
 	ser.write('5')
-	horizontal_angle_track=0
+	horizontal_angle_track=140
 	time.sleep(0.5)
 
 for eachData in data:
 	eachData.display_data()
-# def randrange(n, vmin, vmax):
-#     return (vmax-vmin)*np.random.rand(n) + vmin
 
-# fig = plt.figure()
-# ax = fig.add_subplot(111, projection='3d')
+
+#def randrange(n, vmin, vmax):
+#    return (vmax-vmin)*np.random.rand(n) + vmin
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
 # '''n = 100
 # for c, m, zl, zh in [('r', 'o', -50, -25), ('b', '^', -30, -5)]:
 #     xs = randrange(n, 23, 32)
@@ -84,14 +86,19 @@ for eachData in data:
 #     zs = randrange(n, zl, zh)
 #     ax.scatter(xs, ys, zs, c=c, marker=m)'''
 
-# xs = [1,2,3]
-# ys = [1,2,3]
-# zs = [1,2,3]
+xs = []
+ys = []
+zs = []
 
-# ax.scatter(xs,ys,zs, c ='r', marker = 'o')
+for eachPoint in data:
+	xs.append(eachPoint.x_pos)
+	ys.append(eachPoint.y_pos)
+	zs.append(eachPoint.z_pos)
 
-# ax.set_xlabel('X Label')
-# ax.set_ylabel('Y Label')
-# ax.set_zlabel('Z Label')
+ax.scatter(xs,ys,zs, c ='r', marker = 'o')
 
-# plt.show()
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
+
+plt.show()
