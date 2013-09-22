@@ -7,29 +7,27 @@ from lidar_classdef import *
 
 ser=serial.Serial('/dev/ttyACM0', 9600) #Defines the serial port to use 
 
-data=[] #List object that stores the data from the arduino
+data=[] #List that stores the data from the arduino
 counter=0 #Counter that counts how many data points it has taken (May not be needed for final code)
 
-horizontal_angle_track=130
-vertical_angle_track=0
+horizontal_angle_track=130 #Keeps track of the horizontal angle that has already been swept by the arduino
+vertical_angle_track=0 #Keeps track of the vertical angle that has already been swept by the arduino
 
-print "Waiting for arduino to be ready....."
+print "Waiting for arduino to be ready....." #Indicates that the programme is waiting for the arduino to initialize
 
-time.sleep(1)
+time.sleep(1) #Waits for the arduino to initialize
 
-print "Programme beginning now"
-
-time.sleep(1)
+print "Programme beginning now" #Indicates that the arduino is running its programme
 
 #Moves the servo to the starting position
 
-ser.write('5')
-horizontal_angle_track=130
-time.sleep(0.5)
-ser.write('6')
-vertical_angle_track=90
+ser.write('5') #Sets the servo over to its starting position on the left
+horizontal_angle_track=130 #Assigns that angle to the horizontal_angle_track
+time.sleep(0.5) #Waits half a second to ensure the arduino is ready for next command
+ser.write('6') #Sets the servo to it's starting vertical angle
+vertical_angle_track=90 #Sets the angle to the vertical_angle_track angle
 
-horz_angle=range(horizontal_angle_track, 45, -1)
+horz_angle=range(horizontal_angle_track, 45, -1) #
 vert_angle=range(vertical_angle_track,vertical_angle_track+1,1)
 
 for eachVerticalAngle in vert_angle:	

@@ -84,11 +84,31 @@
 \maketitle
 \newpage
 \section{Introduction} \ \\
-For this lab, we made our own LIDAR out of two servos, an arduino, and an infrared range finder. The servos rotated the sensor in 3 dimensions. For our software setup, we used python to 
+For this lab, our task was to design and build a LIDAR out of two servos, an arduino, and an infrared range finder. \\
+
+In order to achieve this, we split the project into two main components. Firstly, we needed a mechanical design that would support sensor such that it was capable of panning (left-right movement) and tilting (up-down movement). This would allow our sensor to scan any point in 3D space within the 180 degree viewing angle it had in front of it. \\
+
+For our software, we decided to give python ultimate control over the process because we wanted a one-button-push implementation such that once the python programme was run, the programme would control the arduino to do what it needed to do and simply produce the plot on screen at the end of the programme.
+
+\section{Mechanical Design}\ \\
+Since this lab was not meant to be heavily focused on the mechanical design aspect, there will not be too much detail presented here. Essentially we knew we needed a pan and tilt head that would ensure that the sensor panned and tilted while remaining centred along the the axes of rotation. Hence, we chose a cantilever design consisting of the panning servo mounted inside a box. An L-bracket cantilever was used to support the tilt servo and the sensor was mounted to a piece of wood that was glued to the tilt servo to achieve tilting ability. \\
+
 \section{Sensor Testing} \ \\
+The infrared range finder outputs a voltage that corresponds to the distance it detects. However, according to the data sheet, that relationship is not linear. Hence we had to calibrate our own sensors and figure out that relationship experimentally. \\
+
+In order to do this, we taped a sheet of paper to the wall and placed a tape measure on the ground in order to measure the actual distance our sensor was from the wall. We then proceeded to collect the sensor readings output from the arduino. Although the sensor output is in volts, the arduino converts that to a scale of 0 - 1023 thus the readings we obtain are between 0 and 1023 in value. \\
+
+Once we had obtained sensor readings from the sensor for a distance range of 20cm - 150cm in steps of 10, we then produced a graph of raw sensor reading against distance on an excel spreadsheet. We then used the curve fitting tool to find the equation of the line that would fit the data. We eventually found out that the equation that related our raw sensor output to distance was:
+
+\begin{equation}
+distance=25732.835((sensor reading^{-1.13146})
+\end{equation}
+
 \section{One Servo Sensor} \ \\
 \section{Two Servo Sensor} \ \\
 \section{Code} \ \\
+
+
 
 
 \end{document}
