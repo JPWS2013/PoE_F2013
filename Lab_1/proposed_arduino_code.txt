@@ -2,10 +2,10 @@
 
 int incoming_message=0;
 int counter=0;
-int horizontal_angle_track=175;
+int horizontal_angle_track=130;
 int vertical_angle_track=0;
-int horizontal_increment=2;
-int vertical_increment=3;
+int horizontal_increment=1;
+int vertical_increment=1;
 
 Servo horizontal_servo;
 Servo vertical_servo;
@@ -55,28 +55,29 @@ void loop() {
 
     if (incoming_message=='5'){ //Moves sensor all the way left
       //delay(500);
-      horizontal_angle_track=140;
+      horizontal_angle_track=130;
       horizontal_servo.write(horizontal_angle_track);
       //Serial.print ("I just moved the IR Sensor all the way to the left\r\n");
     }
 
     if (incoming_message=='6'){ //Moves sensor to the lowest possible vertical angle setting
-      vertical_angle_track=0;
+      vertical_angle_track=90;
       vertical_servo.write(vertical_angle_track);
       //delay(1000); 
     }
 
     if (incoming_message=='7'){
-      delay(500);
+      //delay(500);
       int reading = analogRead(A5);
-      Serial.println(reading);
+      float distance=25732.834527*pow(reading,-1.1314581);
+      Serial.println(distance);
       //delay(1000); 
     }
     
     if (incoming_message=='8'){
-      delay(500);
-      int reading = analogRead(A5);
-      Serial.println(reading);
+      //delay(500);
+      String angle_packed=String(vertical_angle_track) + ',' + String(horizontal_angle_track);
+      Serial.println(angle_packed);
       //delay(1000); 
     }
 }

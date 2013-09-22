@@ -10,12 +10,12 @@ ser=serial.Serial('/dev/ttyACM0', 9600) #Defines the serial port to use
 data=[] #List object that stores the data from the arduino
 counter=0 #Counter that counts how many data points it has taken (May not be needed for final code)
 
-horizontal_angle_track=175
+horizontal_angle_track=130
 vertical_angle_track=0
 
 print "Waiting for arduino to be ready....."
 
-time.sleep(3)
+time.sleep(1)
 
 print "Programme beginning now"
 
@@ -24,13 +24,13 @@ time.sleep(1)
 #Moves the servo to the starting position
 
 ser.write('5')
-horizontal_angle_track=140
+horizontal_angle_track=130
 time.sleep(0.5)
 ser.write('6')
-vertical_angle_track=0
+vertical_angle_track=90
 
-horz_angle=range(horizontal_angle_track, horizontal_angle_track-60, -2)
-vert_angle=range(vertical_angle_track,vertical_angle_track+9,3)
+horz_angle=range(horizontal_angle_track, 45, -1)
+vert_angle=range(vertical_angle_track,vertical_angle_track+1,1)
 
 for eachVerticalAngle in vert_angle:	
 	#print "I'm sending code to the arduino to reset it back all the way to the left"
@@ -47,19 +47,32 @@ for eachVerticalAngle in vert_angle:
 		#time.sleep(1)
 		ser.write('7')
 
-		response=ser.readline()
-		cleanReading=response[0:-2] #Removes the last 2 characters ("\r\n") from the arduino output
-		cleanReading=int(cleanReading) #Type-casts it as an integer so that it can be plotted
-		distance=25732.834527*cleanReading**(-1.1314581);
+		distance_response=ser.readline()
+		cleanReading=distance_response[0:-2] #Removes the last 2 characters ("\r\n") from the arduino output
+		distance=float(cleanReading) #Type-casts it as an integer so that it can be plotted
+		print "distance= ", distance
 
-		processed_full_data_holder=lidar(horizontal_angle_track, vertical_angle_track, distance)
+		ser.write('8')
+
+		angle_response=ser.readline()
+
+		cleanReading=angle_response[0:-2] #Removes the last 2 characters ("\r\n") from the arduino output
+		seperator_index=cleanReading.index(',')
+		vertical_angle=cleanReading[0:seperator_index]
+		vertical_angle=int(vertical_angle)
+		print "vertical_angle= ", vertical_angle
+		horizontal_angle=cleanReading[(seperator_index+1): ]
+		horizontal_angle=int(horizontal_angle)
+		print "horizontal_angle= ", horizontal_angle
+
+		processed_full_data_holder=lidar(horizontal_angle, vertical_angle, distance)
 
 		data.append(processed_full_data_holder)
 
 		ser.write('1')
 		horizontal_angle_track=horizontal_angle_track-2
 		#print 'horizontal_angle_track= ', horizontal_angle_track
-		time.sleep(0.5)
+		#time.sleep(0.5)
 
 	ser.write('3')
 	vertical_angle_track=vertical_angle_track+3
