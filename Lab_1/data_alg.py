@@ -9,8 +9,8 @@ ser=serial.Serial('/dev/ttyACM0', 9600) #Defines the serial port to use
 
 data=[] #List that stores the data from the arduino
 
-horizontal_angle_track=130 #Keeps track of the horizontal angular position of the sensor
-vertical_angle_track=0 #Keeps track of the vertical angular position of the sensor
+horizontal_angle_track=135 #Keeps track of the horizontal angular position of the sensor
+vertical_angle_track=74 #Keeps track of the vertical angular position of the sensor
 
 print "Waiting for arduino to be ready....." #Indicates that the programme is waiting for the arduino to initialize
 
@@ -21,13 +21,13 @@ print "Programme beginning now" #Indicates that the python programme is running
 #Moves the servo to the starting position
 
 ser.write('5') #Sets the servo over to its starting position on the left
-horizontal_angle_track=130 #Assigns that angle to the horizontal_angle_track
+horizontal_angle_track=135 #Assigns that angle to the horizontal_angle_track
 time.sleep(0.5) #Waits half a second to ensure the arduino is ready for next command
 ser.write('6') #Sets the servo to it's starting vertical angle
-vertical_angle_track=90 #Sets the angle to the vertical_angle_track angle
+vertical_angle_track=74 #Sets the angle to the vertical_angle_track angle
 
-horz_angle=range(horizontal_angle_track, 45, -1) #creates the horizontal range of angles that the servo should sweep through
-vert_angle=range(vertical_angle_track,vertical_angle_track+1,1) #Creates the vertical range of angles that the servo should sweep through
+horz_angle=range(horizontal_angle_track, 35, -1) #creates the horizontal range of angles that the servo should sweep through
+vert_angle=range(vertical_angle_track,115,1) #Creates the vertical range of angles that the servo should sweep through
 
 for eachVerticalAngle in vert_angle:
 	#print "I'm sending code to the arduino to reset it back all the way to the left"
@@ -103,8 +103,8 @@ for eachPoint in data:
 
 ax.scatter(xs,ys,zs, c ='r', marker = 'o') #Creates a scatter plot of all data
 
-ax.set_xlabel('X Label') #X axis label
-ax.set_ylabel('Y Label') #Y axis label
-ax.set_zlabel('Z Label') #Z axis label
+ax.set_xlabel('X Distance in meters') #X axis label
+ax.set_ylabel('Y Distance in meters') #Y axis label
+ax.set_zlabel('Z Distance in meters') #Z axis label
 
 plt.show() #show the pyplot figure

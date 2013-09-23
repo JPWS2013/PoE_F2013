@@ -24,7 +24,8 @@
 
 \usepackage{fancyhdr} % Required for custom headers
 \usepackage{lastpage} % Required to determine the last page for the footer
-\usepackage{extramarks} % Required for headers and footers
+\usepackage{extramarks} % Required for headers and 
+\usepackage{enumerate}
 \usepackage{graphicx} % Required to insert images
 \usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
 \usepackage{amsmath}
@@ -104,18 +105,52 @@ Once we had obtained sensor readings from the sensor for a distance range of 20c
 distance=25732.835((sensor reading^{-1.13146})
 \end{equation}
 
+\newpage
+
 \section{One Servo Sensor} \ \\
 
-
+In order to avoid building multiple mechanisms for one servo and then two servos, we designed a mechanism for two servos. In order to take a 2D plot, we set the vertical angle to 90 degrees in order to point the sensor straight ahead. We then perform a full sweep of the horizontal angles once through. 
 
 \section{Two Servo Sensor} \ \\
 
+For this part, we used the same mechanical set up as before. However, we made it perform both a horizontal and vertical sweep instead of just a horizontal sweep.
 
 \section{Code} \ \\
+In essence, our code has two main modules to it: one written in python and one written in arduino code. \\
 
+The arduino code is written to only contain modes of operation. The available modes of operation are as follows:
 
+\begin{enumerate}
 
+\item Mode '1': Move panning servo to the right by 1 degree
+\item Mode '2': Move panning servo to the left by 1 degree
+\item Mode '3': Move tilting servo up by 1 degree
+\item Mode '4': Move tilting servo down by 1 degree
+\item Mode '5': Move the panning servo to the home position as defined at the beginning of the code
+\item Mode '6': Move the tilting servo to the home position as defined at the beginning of the code
+\item Mode '7': Take a reading from the infrared range finder and return the distance measured to the serial port for python to read
+\item Mode '8': Put the current vertical and horizontal angle together into a string to output to the serial port for python to read
 
+\end{enumerate}
 
+Hence, the arduino simply waits for a command to be passed to it from python through the serial port. Once it receives a command in the form of a mode number, it executes the code corresponding to the mode number received and carries out the action. \\
+
+The python code is more complex. The python code has full control of the entire operation of scanning the 3D space, collecting the data, performing the trigonometry necessary to convert spherical co-ordinates to cartesian co-ordinates and then finally producing the 3-D plot. \\
+
+The communication between the python code and the arduino is done entirely through the serial port using the python serial module. This allows python to send and receive strings through the serial port to to and from the arduino. \\
+
+The act of scanning the space is done by iterating through a range of horizontal and vertical angles, both in increments of 1 degree. The sensor begins at the pre-defined home position. In the case of the diorama used for this lab, the home position is defined as 135 degrees with respect to the horizontal axis and 74 degrees with respect to the vertical. From the home position, for each horizontal angle, the python code performs the following steps:
+
+\begin{enumerate}
+\item Instructs the arduino to take a reading and return the distance measured by the sensor through the serial port
+\item Instructs the arduino to read the current vertical and horizontal angle and concatenate it into one string. Then return it through the serial port for python to read
+\item Feed the distance reading and the vertical and horizontal angles to a new lidar object as defined in python (see appendix for the full class definition). The initialized lidar object will then take those numbers and convert them from spherical co-ordinates to cartesian co-ordinates. It then stores the cartesian co-ordinates as instance variables.
+\item Appends the newly created lidar object to the data list to retrieve later for plotting.
+\item Move the sensor 1 degree to the right
+\end{enumerate}
+
+Once the arduino has completed a full horizontal sweep at a given tilt angle, it then resets back to the horizontal home position and increases the vertical angle by 1 degree. It then proceeds to sweep through the horizontal angles again as described in the above list. \\
+
+Once the full 3D sweep of the space is complete, the python code then reads each lidar object in the data list and appends the x, y and z co-ordinates to lists that will hold all the x, y and z co-ordinates for plotting in a 3D plot. Finally, using the pyplot functions found in the matplotlib module, the python code will create a 3D scatter plot of the data obtained from the scan and show the plot as a matplotlib figure.
 
 \end{document}
