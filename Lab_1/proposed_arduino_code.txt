@@ -2,7 +2,7 @@
 
 int incoming_message=0; //variable that receives the command from the python code
 
-int left_home_position=130; //Sets the left side home position
+int left_home_position=115; //Sets the left side home position
 int horizontal_angle_track=left_home_position; //Keeps track of the horizontal angle
 
 int down_home_position=90;

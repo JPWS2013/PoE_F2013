@@ -92,28 +92,95 @@ In order to achieve this, we split the project into two main components. Firstly
 For our software, we decided to give python ultimate control over the process because we wanted a one-button-push implementation such that once the python programme was run, the programme would control the arduino to do what it needed to do and simply produce the plot on screen at the end of the programme.
 
 \section{Mechanical Design}\ \\
-Since this lab was not meant to be heavily focused on the mechanical design aspect, there will not be too much detail presented here. Essentially we knew we needed a pan and tilt head that would ensure that the sensor panned and tilted while remaining centred along the the axes of rotation. Hence, we chose a cantilever design consisting of the panning servo mounted inside a box. An L-bracket cantilever was used to support the tilt servo and the sensor was mounted to a piece of wood that was glued to the tilt servo to achieve tilting ability. \\
+Since we decided to focus less on the mechanical design aspect and more on the software aspect, there will not be too much detail presented here on the mechanical design. \\
 
+Essentially we knew we needed a pan and tilt head that would ensure that the sensor panned and tilted while remaining centred along the the axes of rotation. Hence, we chose a cantilever design consisting of the panning servo mounted inside a box. An L-bracket cantilever was used to support the tilt servo and the sensor was mounted to a piece of wood that was glued to the tilt servo to achieve tilting ability. \\
+%
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.08, angle=270]{mechanism.JPG}
+\caption{Picture of Mechanical Design}
+\end{center}
+\end{figure}
+%
 \section{Sensor Testing} \ \\
 The infrared range finder outputs a voltage that corresponds to the distance it detects. However, according to the data sheet, that relationship is not linear. Hence we had to calibrate our own sensors and figure out that relationship experimentally. \\
 
 In order to do this, we taped a sheet of paper to the wall and placed a tape measure on the ground in order to measure the actual distance our sensor was from the wall. We then proceeded to collect the sensor readings output from the arduino. Although the sensor output is in volts, the arduino converts that to a scale of 0 - 1023 thus the readings we obtain are between 0 and 1023 in value. \\
 
-Once we had obtained sensor readings from the sensor for a distance range of 20cm - 150cm in steps of 10, we then produced a graph of raw sensor reading against distance on an excel spreadsheet. We then used the curve fitting tool to find the equation of the line that would fit the data. We eventually found out that the equation that related our raw sensor output to distance was:
+Once we had obtained sensor readings from the sensor for a distance range of 20cm - 150cm in steps of 10, we then produced a graph of raw sensor reading against distance:
+
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.3]{ReadingDistance.jpg}
+\caption{Graph of Actual Distance against Sensor Reading with the best fit curve plotted as well}
+\end{center}
+\end{figure}
+
+As shown in the figure above, we used the curve fitting tool to find the equation of the line that would fit the data. We eventually found out that the equation that related our raw sensor output to distance was:
 
 \begin{equation}
 distance=25732.835((sensor reading^{-1.13146})
 \end{equation}
-
+%
+With this equation now known, we programmed it into the arduino to convert the raw sensor readings into distance. We then repeated the data collection method above but recorded calculated distance data instead of raw sensor data. We then plotted actual distance against distance calculated by the arduino:
 \newpage
+%
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.2]{MeasuredActual.jpg}
+\caption{Graph of Actual Distance against calculated distance plotted as a scatter plot}
+\end{center}
+\end{figure}
+%
+As can be seen in figure 3, the data is approximately linear and the scatter of the data suggests that the sensor readings are pretty accurate. However, the further the actual distance, the larger the scatter and the less accurate the readings.
 
 \section{One Servo Sensor} \ \\
+%
+In order to avoid building multiple mechanisms for one servo and then two servos, we designed a mechanism for two servos. In order to take a 2D plot, we set the vertical angle to 90 degrees in order to point the sensor straight ahead. We then perform a full sweep of the horizontal angles once through. \\
 
-In order to avoid building multiple mechanisms for one servo and then two servos, we designed a mechanism for two servos. In order to take a 2D plot, we set the vertical angle to 90 degrees in order to point the sensor straight ahead. We then perform a full sweep of the horizontal angles once through. 
+A picture of the sensor taking a horizontal sweep is shown below: \\
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.08]{2dscanpic.JPG}
+\caption{The sensor taking a 2-D scan of the inside of a cardboard box}
+\end{center}
+\end{figure}
+\newpage
+
+The output of that scan is now shown below:
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.6]{2d_scan.png}
+\caption{2-D scan output of the sensor}
+\end{center}
+\end{figure}
 
 \section{Two Servo Sensor} \ \\
+%
+For this part, we used the same mechanical set up as before. However, we made it perform both a horizontal and vertical sweep instead of just a horizontal sweep. A picture of the sensor taking a 3D sweep of the diorama is shown below:
 
-For this part, we used the same mechanical set up as before. However, we made it perform both a horizontal and vertical sweep instead of just a horizontal sweep.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.06]{3dscan.JPG}
+\caption{The LIDAR taking a 3-D scan of the diorama}
+\end{center}
+\end{figure}
+%
+The 3D output of our python programme is shown on the next page:
+%
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{3D_diarama2.png}
+\caption{3D plot of the Diorama used for this class; It has been zoomed in for a better view}
+\end{center}
+\end{figure}
+
+The 3D plot looks similar to the diorama, especially towards the front. Both the box and roll in the front of the diorama are identifiable in the picture. However, the further back in the diorama, the less accurate our representation is, hence the lack of detail toward the back of the diarama. In addition, the bottom right corner of the diorama is not very well depicted. This is because we set our LIDAR up at an angle where the box in the front of the diorama blocks that corner.
+
 
 \section{Code} \ \\
 In essence, our code has two main modules to it: one written in python and one written in arduino code. \\
@@ -133,13 +200,23 @@ The arduino code is written to only contain modes of operation. The available mo
 
 \end{enumerate}
 
+
 Hence, the arduino simply waits for a command to be passed to it from python through the serial port. Once it receives a command in the form of a mode number, it executes the code corresponding to the mode number received and carries out the action. \\
 
 The python code is more complex. The python code has full control of the entire operation of scanning the 3D space, collecting the data, performing the trigonometry necessary to convert spherical co-ordinates to cartesian co-ordinates and then finally producing the 3-D plot. \\
 
-The communication between the python code and the arduino is done entirely through the serial port using the python serial module. This allows python to send and receive strings through the serial port to to and from the arduino. \\
+The communication between the python code and the arduino is done entirely through the serial port using the python serial module. The act of scanning the space is done by iterating through a range of horizontal and vertical angles, both in increments of 1 degree. The sensor begins at the pre-defined home position. In the case of the diorama used for this lab, the home position is defined as 135 degrees with respect to the horizontal axis and 74 degrees with respect to the vertical. The reference for these angles is shown below: \\
 
-The act of scanning the space is done by iterating through a range of horizontal and vertical angles, both in increments of 1 degree. The sensor begins at the pre-defined home position. In the case of the diorama used for this lab, the home position is defined as 135 degrees with respect to the horizontal axis and 74 degrees with respect to the vertical. From the home position, for each horizontal angle, the python code performs the following steps:
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.3]{FrontView.PNG}
+\includegraphics[scale=0.3]{TopView.PNG}
+\includegraphics[scale=0.3]{SideView.PNG}
+\caption{Diagrams showing the reference used to determine the angle of the sensor when converting from spherical to cartesian co-ordinates}
+\end{center}
+\end{figure}
+
+From the home position, for each horizontal angle, the python code performs the following steps:
 
 \begin{enumerate}
 \item Instructs the arduino to take a reading and return the distance measured by the sensor through the serial port
@@ -151,6 +228,6 @@ The act of scanning the space is done by iterating through a range of horizontal
 
 Once the arduino has completed a full horizontal sweep at a given tilt angle, it then resets back to the horizontal home position and increases the vertical angle by 1 degree. It then proceeds to sweep through the horizontal angles again as described in the above list. \\
 
-Once the full 3D sweep of the space is complete, the python code then reads each lidar object in the data list and appends the x, y and z co-ordinates to lists that will hold all the x, y and z co-ordinates for plotting in a 3D plot. Finally, using the pyplot functions found in the matplotlib module, the python code will create a 3D scatter plot of the data obtained from the scan and show the plot as a matplotlib figure.
+Once the full 3D sweep of the space is complete, the python code then reads each lidar object in the data list and produces a 3D scatter plot of the data obtained from the scan as a matplotlib figure.
 
 \end{document}

@@ -103,8 +103,8 @@ for eachPoint in data:
 
 ax.scatter(xs,ys,zs, c ='r', marker = 'o') #Creates a scatter plot of all data
 
-ax.set_xlabel('X Distance in meters') #X axis label
-ax.set_ylabel('Y Distance in meters') #Y axis label
-ax.set_zlabel('Z Distance in meters') #Z axis label
+ax.set_xlabel('X Distance in centimeters') #X axis label
+ax.set_ylabel('Y Distance in centimeters') #Y axis label
+ax.set_zlabel('Z Distance in centimeters') #Z axis label
 
 plt.show() #show the pyplot figure
