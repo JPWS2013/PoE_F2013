@@ -103,6 +103,17 @@ Essentially we knew we needed a pan and tilt head that would ensure that the sen
 \end{center}
 \end{figure}
 %
+
+\section{Connection Schematic} \ \\
+Below is the schematic showing the pins that we connected the two servos and the infrared range finder to:
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4, angle=270]{schematic.png}
+\caption{Schematic of the connections of the servos and infrared range finder}
+\end{center}
+\end{figure}
+
 \section{Sensor Testing} \ \\
 The infrared range finder outputs a voltage that corresponds to the distance it detects. However, according to the data sheet, that relationship is not linear. Hence we had to calibrate our own sensors and figure out that relationship experimentally. \\
 
@@ -125,11 +136,10 @@ distance=25732.835((sensor reading^{-1.13146})
 \end{equation}
 %
 With this equation now known, we programmed it into the arduino to convert the raw sensor readings into distance. We then repeated the data collection method above but recorded calculated distance data instead of raw sensor data. We then plotted actual distance against distance calculated by the arduino:
-\newpage
 %
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=0.2]{MeasuredActual.jpg}
+\includegraphics[scale=0.3]{MeasuredActual.jpg}
 \caption{Graph of Actual Distance against calculated distance plotted as a scatter plot}
 \end{center}
 \end{figure}
