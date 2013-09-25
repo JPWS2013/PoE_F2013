@@ -9,11 +9,11 @@ ser=serial.Serial('/dev/ttyACM0', 9600) #Defines the serial port to use
 
 data=[] #List that stores the data from the arduino
 
-horzBegin=115 #Sets the home horizontal angle
+horzBegin=120 #Sets the home horizontal angle
 horzEnd=60 #Sets the end horizontal angle
 
-vertBegin=64 #sets the home vertical angle
-vertEnd=103 #Sets the end vertical angle
+vertBegin=70 #sets the home vertical angle
+vertEnd=110 #Sets the end vertical angle
 
 print "Waiting for arduino to be ready....." #Indicates that the programme is waiting for the arduino to initialize
 
