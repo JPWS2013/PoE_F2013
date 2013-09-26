@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.8.2)  26 SEP 2013 16:11
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.8.2)  26 SEP 2013 16:58
 entering extended mode
  %&-line parsing enabled.
 **Lab_2_writeup.tex
@@ -294,26 +294,55 @@ LaTeX Info: Redefining \pageref on input line 83.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 87--89
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
 
  []
 
-AED: lastpage setting LastPage [2] (./Lab_2_writeup.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 89--90
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
+
+ []
+
+AED: lastpage setting LastPage
+Underfull \hbox (badness 10000) in paragraph at lines 99--107
+
+ []
+
+[2] (./Lab_2_writeup.aux) ) 
 Here is how much of TeX's memory you used:
- 5072 strings out of 495061
- 71127 string characters out of 1182622
- 227747 words of memory out of 3000000
- 8182 multiletter control sequences out of 15000+50000
+ 5084 strings out of 495061
+ 71247 string characters out of 1182622
+ 229745 words of memory out of 3000000
+ 8188 multiletter control sequences out of 15000+50000
  8867 words of font info for 32 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 38i,10n,43p,273b,300s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-tex
-live/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/
-type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public
-/amsfonts/cm/cmr9.pfb>
-Output written on Lab_2_writeup.pdf (2 pages, 45246 bytes).
+ 38i,10n,43p,273b,302s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfont
+s/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.
+pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb>
+Output written on Lab_2_writeup.pdf (2 pages, 46770 bytes).
 PDF statistics:
- 33 PDF objects out of 1000 (max. 8388607)
- 4 named destinations out of 1000 (max. 500000)
- 9 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 59 PDF objects out of 1000 (max. 8388607)
+ 10 named destinations out of 1000 (max. 500000)
+ 57 words of extra memory for PDF output out of 10000 (max. 10000000)
 
